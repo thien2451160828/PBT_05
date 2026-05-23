@@ -1,0 +1,37 @@
+.card {
+    background: white;
+    padding: $spacing-md;
+    border-radius: $spacing-sm;
+    text-align: center;
+    
+    // Gọi mixin đổ bóng
+    @include card-shadow;
+
+    // Nesting (Lồng ghép)
+    .card-title {
+        font-size: 1.2rem;
+        color: $secondary-color;
+        margin-bottom: $spacing-sm;
+    }
+
+    .card-price {
+        color: #e74c3c;
+        font-weight: bold;
+        margin-bottom: $spacing-md;
+    }
+
+    .btn-buy {
+        padding: $spacing-sm $spacing-md;
+        background-color: $primary-color;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%;
+        
+        // Parent selector (&) cho trạng thái hover
+        &:hover {
+            background-color: darken($primary-color, 10%);
+        }
+    }
+}

@@ -1,0 +1,34 @@
+// Nhúng các file partials
+@import 'variables';
+@import 'mixins';
+@import 'components';
+
+// Reset cơ bản
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: $font-primary;
+    background-color: #f4f6f8;
+    padding: $spacing-lg;
+}
+
+// Lưới sản phẩm áp dụng Mixin Responsive
+.product-grid {
+    display: grid;
+    grid-template-columns: 1fr; // Mobile-First: 1 cột
+    gap: $spacing-md;
+
+    // Gọi mixin cho Tablet (2 cột)
+    @include respond-to($breakpoint-tablet) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    // Gọi mixin cho Desktop (4 cột)
+    @include respond-to($breakpoint-desktop) {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}

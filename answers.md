@@ -117,3 +117,8 @@ Trình duyệt web (như Chrome, Safari, Edge) mặc định chỉ được lậ
 
 **3. Cần bước gì để chuyển SCSS → CSS?**[cite: 3]
 Cần phải trải qua một bước gọi là **Biên dịch (Compile)**. Các công cụ biên dịch (như extension Live Sass Compiler trong VS Code, Node Sass, Dart Sass...) sẽ đọc file `.scss` của bạn, dịch các cú pháp đặc biệt (như biến, lồng ghép, mixin) và tạo ra một file `.css` chuẩn hóa để trình duyệt có thể sử dụng.
+
+### Bài B3 — Lệnh biên dịch SCSS
+Để chuyển SCSS sang CSS, tôi đã sử dụng lệnh (nếu dùng Node Sass / Dart Sass):
+`sass scss/style.scss style.css`
+(Hoặc sử dụng extension Live Sass Compiler trên VS Code để tự động biên dịch).
