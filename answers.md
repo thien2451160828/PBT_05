@@ -122,3 +122,113 @@ Cần phải trải qua một bước gọi là **Biên dịch (Compile)**. Các
 Để chuyển SCSS sang CSS, tôi đã sử dụng lệnh (nếu dùng Node Sass / Dart Sass):
 `sass scss/style.scss style.css`
 (Hoặc sử dụng extension Live Sass Compiler trên VS Code để tự động biên dịch).
+
+## PHẦN C — PHÂN TÍCH (20 điểm)
+
+### Câu C1 (10đ) — Phân tích trang web thực: Shopee
+
+*(Lưu ý: Các ảnh chụp màn hình minh chứng đã được lưu trong thư mục `screenshots/`)*
+
+**1. Phân tích sự thay đổi trên 3 kích thước màn hình:**[cite: 2]
+Tôi đã chọn trang thương mại điện tử Shopee để phân tích:
+
+*   **Mobile (375px):**
+    *   **Navigation:** Thanh điều hướng (Header) được thu gọn tối đa, chỉ còn thanh tìm kiếm và biểu tượng giỏ hàng. Không có menu ngang, thay vào đó sử dụng Bottom Navigation (thanh điều hướng dưới đáy màn hình) hoặc Hamburger menu.
+    *   **Lưới content:** Lưới sản phẩm (Product Grid) hiển thị **2 cột** để tiết kiệm không gian.
+    *   **Elements bị ẩn:** Các banner quảng cáo hai bên hông, sidebar danh mục bên trái bị ẩn hoàn toàn.
+    *   **Font size:** Kích thước chữ được thu nhỏ lại để hiển thị được nhiều thông tin hơn trên không gian hẹp.
+
+*   **Tablet (768px):**
+    *   **Navigation:** Thanh tìm kiếm dài ra. Bắt đầu xuất hiện các nút liên kết phụ trên Header.
+    *   **Lưới content:** Lưới sản phẩm mở rộng lên **3 hoặc 4 cột**.
+    *   **Elements bị ẩn:** Vẫn ẩn sidebar danh mục dọc.
+
+*   **Desktop (1440px):**
+    *   **Navigation:** Header hiển thị đầy đủ (Logo, thanh tìm kiếm lớn, giỏ hàng, các liên kết hỗ trợ, thông báo, đăng nhập/đăng ký).
+    *   **Lưới content:** Lưới sản phẩm hiển thị **5 hoặc 6 cột**.
+    *   **Elements:** Hiển thị toàn bộ Sidebar danh mục sản phẩm (bên trái) và các cấu trúc phức tạp khác. Font size đạt kích thước tiêu chuẩn lớn nhất.
+
+**2. Ảnh chụp Media Queries (trong file CSS của Shopee):**[cite: 2]
+*(Đã chụp 2 ảnh phần tử `@media` trong tab DevTools -> Styles và lưu vào thư mục `screenshots/`)*
+
+---
+
+### Câu C2 (10đ) — Thiết kế Responsive Strategy (Trang Đặt bàn)
+
+**1. Wireframe / Bố cục chiến lược cho 3 kích thước:**[cite: 2]
+
+*   **Mobile (< 768px):**
+    *   **Header:** Thu gọn, hiển thị Logo bên trái, nút Hamburger (☰) bên phải. Điện thoại đặt bàn nằm trong menu ẩn.
+    *   **Hero Image:** Ảnh nhỏ lại, text căn giữa.
+    *   **Grid món ăn:** Hiển thị **1 cột** (cuộn dọc).
+    *   **Form & Bản đồ:** Nằm xếp chồng lên nhau (Form nằm trên, Bản đồ nằm dưới form).
+    *   **Footer:** Thông tin xếp 1 cột.
+
+*   **Tablet (768px - 1023px):**
+    *   **Header:** Logo và số điện thoại hiển thị chung trên một hàng ngang.
+    *   **Hero Image:** Chiều cao tăng lên.
+    *   **Grid món ăn:** Hiển thị **2 cột**.
+    *   **Form & Bản đồ:** Vẫn có thể xếp chồng dọc (1 cột) do form cần không gian nhập liệu rộng rãi, hoặc chia tỷ lệ 6:4.
+
+*   **Desktop (≥ 1024px):**
+    *   **Header:** Hiển thị ngang toàn bộ (Logo - Menu - SĐT nổi bật).
+    *   **Grid món ăn:** Hiển thị **3 cột** tuyệt đẹp.
+    *   **Form & Bản đồ:** Nằm cạnh nhau trên 1 hàng (chia làm **2 cột**, Form đặt bàn nằm bên trái, Bản đồ Google Maps nhúng nằm bên phải).
+    *   **Sidebar:** Có thể có hoặc không, ưu tiên tập trung vào Form.
+
+**2. CSS Skeleton (Grid + Mobile-First):**[cite: 2]
+```css
+/* =======================================
+   MOBILE-FIRST BASELINE (< 768px)
+   ======================================= */
+/* Layout mặc định là 1 cột từ trên xuống dưới */
+.container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.header { display: flex; justify-content: space-between; }
+.nav-menu { display: none; } /* Ẩn menu ngang trên mobile */
+
+/* Grid món ăn 1 cột */
+.food-grid {
+    display: grid;
+    grid-template-columns: 1fr; 
+    gap: 15px;
+}
+
+/* Khu vực Đặt bàn (Form & Map xếp chồng 1 cột) */
+.booking-section {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+/* =======================================
+   TABLET BREAKPOINT (>= 768px)
+   ======================================= */
+@media (min-width: 768px) {
+    /* Grid món ăn lên 2 cột */
+    .food-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* =======================================
+   DESKTOP BREAKPOINT (>= 1024px)
+   ======================================= */
+@media (min-width: 1024px) {
+    /* Hiện menu ngang */
+    .nav-menu { display: flex; gap: 20px; }
+    
+    /* Grid món ăn lên 3 cột */
+    .food-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    /* Đưa Form và Bản đồ nằm ngang cạnh nhau (1:1) */
+    .booking-section {
+        grid-template-columns: 1fr 1fr;
+    }
+}
